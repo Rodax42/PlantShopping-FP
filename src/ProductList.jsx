@@ -269,6 +269,13 @@ function ProductList() {
         }));
     }
 
+    const RemovedFromCart = (name) => {
+        setAddedToCart((prevState) => ({
+            ...prevState,
+            [name]:false,
+        }));
+    }
+
     return (
         <div>
              <div className="navbar" style={styleObj}>
@@ -304,7 +311,9 @@ function ProductList() {
                                 <div className='product-title'>{plant.name}</div>
                                 <div className='product-title'>{plant.description}</div>
                                 <div className='product-title'>{plant.cost}</div>
-                                <button  className="product-button" onClick={() => handleAddToCart(plant)}>Add to Cart</button>
+                                { (!addedToCart[plant.name] || addedToCart[plant.name] == false) ?
+                                    <button  className="product-button" onClick={() => handleAddToCart(plant)}>Add to Cart</button>
+                                    : <button  className="product-button" style={{backgroundColor:"gray"}} >Added to Cart</button>}
                             </div>
                         ))}
                     </div>
@@ -312,7 +321,7 @@ function ProductList() {
             ))}
         </div>
  ) :  (
-    <CartItem onContinueShopping={handleContinueShopping}/>
+    <CartItem onContinueShopping={handleContinueShopping} removedFromCart={RemovedFromCart}/>
 )}
     </div>
     );
